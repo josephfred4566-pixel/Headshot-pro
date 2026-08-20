@@ -1,7 +1,7 @@
 # HEADSHOT PHOTOGRAPHER
 ### Commercial Portraiture & Studio Photography
 
-![Headshot Photographer Studio Preview](./src/assets/images/app_preview_banner_1787211899444.jpg)
+![Headshot Photographer Studio Preview - Alex Rivera (App Test Selfie)](https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1200&q=80)
 
 Transform casual smartphone selfies and snapshots into studio-grade executive commercial portraits with authentic 85mm prime lens depth-of-field, tailored lighting schemes, professional wardrobe stylings, and darkroom post-processing.
 
