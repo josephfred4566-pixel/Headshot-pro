@@ -44,8 +44,8 @@ export function getCropRect(
   const sw = baseW / zoom;
   const sh = baseH / zoom;
 
-  // Center with slight bias towards upper portrait third
-  const centerShiftY = (imgHeight - sh) * 0.42;
+  // Center with bias towards upper portrait third to ensure full face and head are fully visible
+  const centerShiftY = (imgHeight - sh) * 0.30;
   const centerShiftX = (imgWidth - sw) / 2;
 
   const maxShiftX = (imgWidth - sw) / 2;
@@ -235,13 +235,12 @@ export async function generateStudioSimulationHeadshot(
         ctx.fill();
       }
 
-      // 2. Draw Subject in Center with Portrait Depth & Framing
-      // Calculate crop centering on top 60% of original image (where face usually is)
-      const scale = Math.max(canvasW / img.width, canvasH / img.height) * 1.05;
+      // 2. Draw Subject in Center with Portrait Depth & Framing (Focusing on full face and upper torso)
+      const scale = Math.max(canvasW / img.width, canvasH / img.height) * 1.02;
       const drawW = img.width * scale;
       const drawH = img.height * scale;
       const drawX = (canvasW - drawW) / 2;
-      const drawY = (canvasH - drawH) / 2 - (canvasH * 0.05);
+      const drawY = (canvasH - drawH) / 2 - (canvasH * 0.10);
 
       // Save before clipping & soft portrait feathering
       ctx.save();
@@ -619,8 +618,8 @@ export async function exportPlatformHeadshot(
         cropW = srcW;
         cropH = srcW / targetAspect;
         cropX = 0;
-        // Bias portrait crop slightly upwards (0.25 rather than 0.5) to keep eye-level centered
-        cropY = Math.max(0, (srcH - cropH) * 0.25);
+        // Bias portrait crop upwards (0.18 rather than 0.25) to keep full face and head centered
+        cropY = Math.max(0, (srcH - cropH) * 0.18);
       }
 
       // Compute CSS filter string for canvas

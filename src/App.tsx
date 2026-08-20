@@ -7,6 +7,7 @@ import { GenerationProgress } from './components/GenerationProgress';
 import { HeadshotViewer } from './components/HeadshotViewer';
 import { HeadshotGallery } from './components/HeadshotGallery';
 import { WebcamModal } from './components/WebcamModal';
+import { GoogleDriveModal } from './components/GoogleDriveModal';
 import { SAMPLE_SELFIES } from './data/sampleSelfies';
 import { HEADSHOT_STYLES } from './data/styles';
 import { WARDROBE_OPTIONS, LIGHTING_OPTIONS, EXPRESSION_PRESETS } from './data/wardrobes';
@@ -36,6 +37,7 @@ export default function App() {
 
   const [isWebcamOpen, setIsWebcamOpen] = useState(false);
   const [isGalleryOpen, setIsGalleryOpen] = useState(false);
+  const [isDriveOpen, setIsDriveOpen] = useState(false);
 
   // Load stored gallery on mount
   useEffect(() => {
@@ -228,6 +230,7 @@ export default function App() {
         onNewSession={() => {
           setActiveStep('studio');
         }}
+        onOpenDrive={() => setIsDriveOpen(true)}
       />
 
       {/* Main Container */}
@@ -351,6 +354,17 @@ export default function App() {
         }}
         onDeleteItem={handleDeleteItem}
         onToggleFavorite={handleToggleFavorite}
+      />
+
+      {/* Google Drive Integration Modal */}
+      <GoogleDriveModal
+        isOpen={isDriveOpen}
+        onClose={() => setIsDriveOpen(false)}
+        currentItem={currentItem || undefined}
+        onImportImage={(imageUrl, name) => {
+          setCurrentSelfie(imageUrl);
+          setActiveStep('studio');
+        }}
       />
     </div>
   );
