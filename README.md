@@ -1,6 +1,7 @@
-# AI Commercial Portrait & Headshot Photographer Studio
+# HEADSHOT PHOTOGRAPHER
+### Commercial Portraiture & Studio Photography
 
-![AI Headshot Studio Preview](./src/assets/images/app_preview_banner_1787211899444.jpg)
+![Headshot Photographer Studio Preview](./src/assets/images/app_preview_banner_1787211899444.jpg)
 
 Transform casual smartphone selfies and snapshots into studio-grade executive commercial portraits with authentic 85mm prime lens depth-of-field, tailored lighting schemes, professional wardrobe stylings, and darkroom post-processing.
 

@@ -23,3 +23,55 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #44403c;
 }
+
+/* 5-Second Warm Amber / Golden Orange Border Light Roll Animation */
+@keyframes borderBeamRoll {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes amberGlowPulse {
+  0%, 100% {
+    opacity: 0.75;
+    filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.8)) drop-shadow(0 0 14px rgba(234, 88, 12, 0.5));
+  }
+  50% {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px rgba(251, 191, 36, 1)) drop-shadow(0 0 20px rgba(245, 158, 11, 0.8));
+  }
+}
+
+.animate-border-beam-5s {
+  stroke-dasharray: 28 72;
+  animation: borderBeamRoll 5s linear infinite, amberGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes dashedGlowRoll {
+  0% {
+    stroke-dashoffset: 100;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animate-dashed-glow-5s {
+  animation: dashedGlowRoll 5s linear infinite, amberGlowPulse 2.5s ease-in-out infinite;
+}
+
+@keyframes conicRoll5s {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-conic-beam-5s {
+  animation: conicRoll5s 5s linear infinite;
+}

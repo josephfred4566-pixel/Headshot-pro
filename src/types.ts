@@ -72,9 +72,11 @@ export interface ImageAdjustments {
   exposure: number; // -50 to 50
   contrast: number; // -50 to 50
   warmth: number; // -50 to 50
+  shadows: number; // 0 to 100 (Brighten shadows for facial definition & shadow detail)
   vignette: number; // 0 to 100
   sharpness: number; // 0 to 100
   backgroundBlur: number; // 0 to 100 (Aperture depth-of-field simulation from f/16 to f/1.2)
+  uniformBgContrast?: boolean; // Ensure uniform background contrast for subject focus
   skinEnhance?: boolean; // AI Enhance Skin: natural skin-smoothing & blemish softening mask
   crop?: CropSettings; // Cropping & Framing parameters
   isBlackAndWhite: boolean;

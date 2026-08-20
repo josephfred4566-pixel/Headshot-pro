@@ -356,8 +356,9 @@ export const HeadshotViewer: React.FC<HeadshotViewerProps> = ({
     });
   };
 
-  // Compute CSS filter, aperture blur, and crop transform for live preview
-  const brightness = 100 + item.adjustments.exposure;
+  // Compute CSS filter, aperture blur, shadow lift, and crop transform for live preview
+  const shadowLiftVal = item.adjustments.shadows || 0;
+  const brightness = 100 + item.adjustments.exposure + (shadowLiftVal * 0.12);
   const contrastVal = 100 + item.adjustments.contrast;
   const grayVal = item.adjustments.isBlackAndWhite ? 100 : 0;
   const sepiaVal = item.adjustments.warmth > 0 ? item.adjustments.warmth * 0.4 : 0;
@@ -745,7 +746,18 @@ export const HeadshotViewer: React.FC<HeadshotViewerProps> = ({
                     />
                   )}
 
-                  <div className="absolute top-4 left-4 z-10 rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-stone-950 shadow-md flex items-center gap-1.5">
+                  {/* Uniform Background Contrast Overlay to maintain focus on subject */}
+                  {item.adjustments.uniformBgContrast !== false && (
+                    <div
+                      className="pointer-events-none absolute inset-0 z-0"
+                      style={{
+                        background:
+                          'radial-gradient(ellipse 65% 75% at 50% 45%, rgba(0,0,0,0) 35%, rgba(15,15,15,0.18) 75%, rgba(10,10,10,0.32) 100%)',
+                      }}
+                    />
+                  )}
+
+                  <div className="absolute top-4 left-4 z-10 rounded-full bg-amber-500 px-3 py-1 text-xs font-semibold text-stone-950 shadow-md flex items-center gap-1.5 flex-wrap">
                     <span>AI Studio 85mm</span>
                     {bgBlurPx > 0 && (
                       <span className="rounded bg-stone-950/20 px-1 py-0.2 text-[10px] font-mono font-bold">
@@ -756,6 +768,16 @@ export const HeadshotViewer: React.FC<HeadshotViewerProps> = ({
                       <span className="flex items-center gap-0.5 rounded bg-stone-950/20 px-1.5 py-0.2 text-[10px] font-mono font-bold text-stone-950">
                         <Sparkles className="h-2.5 w-2.5 inline" />
                         <span>Skin</span>
+                      </span>
+                    )}
+                    {(item.adjustments.shadows || 0) > 0 && (
+                      <span className="flex items-center gap-0.5 rounded bg-stone-950/20 px-1.5 py-0.2 text-[10px] font-mono font-bold text-stone-950">
+                        <span>Shadows +{item.adjustments.shadows}%</span>
+                      </span>
+                    )}
+                    {item.adjustments.uniformBgContrast !== false && (
+                      <span className="rounded bg-stone-950/20 px-1.5 py-0.2 text-[10px] font-mono font-bold text-stone-950">
+                        Uniform BG
                       </span>
                     )}
                     {isCropped && (
@@ -2411,6 +2433,70 @@ export const HeadshotViewer: React.FC<HeadshotViewerProps> = ({
                       }
                       className="mt-1.5 w-full accent-amber-500"
                     />
+                  </div>
+
+                  {/* Shadow Brightening for Facial Definition */}
+                  <div className="rounded-xl border border-stone-800 bg-stone-950/60 p-3 space-y-1.5">
+                    <div className="flex justify-between text-xs text-stone-200 font-medium">
+                      <span className="flex items-center gap-1.5">
+                        <Sparkles className="h-3.5 w-3.5 text-amber-400" />
+                        <span>Shadow Brightening (Facial Definition)</span>
+                      </span>
+                      <span className="font-mono text-amber-400 font-bold">
+                        {item.adjustments.shadows || 0}%
+                      </span>
+                    </div>
+                    <p className="text-[10px] text-stone-400 leading-tight">
+                      Lifts dark facial shadows (cheeks, jawline, eye sockets) for crisp structural definition.
+                    </p>
+                    <input
+                      type="range"
+                      min="0"
+                      max="100"
+                      value={item.adjustments.shadows || 0}
+                      onChange={(e) =>
+                        onUpdateAdjustments({
+                          ...item.adjustments,
+                          shadows: Number(e.target.value),
+                        })
+                      }
+                      className="w-full accent-amber-400 mt-1"
+                    />
+                  </div>
+
+                  {/* Uniform Background Contrast Toggle */}
+                  <div className="rounded-xl border border-stone-800 bg-stone-950/60 p-3 flex items-center justify-between">
+                    <div>
+                      <div className="flex items-center gap-1.5 text-xs font-semibold text-stone-200">
+                        <span>Uniform Background Contrast</span>
+                        <span className="rounded bg-amber-500/20 px-1.5 py-0.2 text-[9px] font-bold text-amber-300">
+                          Cleaner Profile Look
+                        </span>
+                      </div>
+                      <p className="text-[10px] text-stone-400 mt-0.5">
+                        Keeps background lighting balanced so focus stays entirely on the subject.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onUpdateAdjustments({
+                          ...item.adjustments,
+                          uniformBgContrast: item.adjustments.uniformBgContrast === false ? true : false,
+                        })
+                      }
+                      className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out ${
+                        item.adjustments.uniformBgContrast !== false ? 'bg-amber-500' : 'bg-stone-800'
+                      }`}
+                    >
+                      <span className="sr-only">Toggle Uniform Background Contrast</span>
+                      <span
+                        aria-hidden="true"
+                        className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-stone-950 shadow-md ring-0 transition duration-200 ease-in-out ${
+                          item.adjustments.uniformBgContrast !== false ? 'translate-x-5' : 'translate-x-0'
+                        }`}
+                      />
+                    </button>
                   </div>
 
                   {/* Warmth */}

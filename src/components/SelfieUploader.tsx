@@ -171,12 +171,83 @@ export const SelfieUploader: React.FC<SelfieUploaderProps> = ({
             onDragLeave={() => setIsDragging(false)}
             onDrop={handleDrop}
             onClick={() => fileInputRef.current?.click()}
-            className={`group relative flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 text-center transition-all ${
+            className={`group relative flex cursor-pointer flex-col items-center justify-center overflow-hidden rounded-xl p-8 text-center transition-all ${
               isDragging
-                ? 'border-amber-500 bg-amber-500/5'
-                : 'border-stone-700 bg-stone-950/60 hover:border-amber-500/50 hover:bg-stone-950'
+                ? 'bg-amber-500/5'
+                : 'bg-stone-950/70 hover:bg-stone-950'
             }`}
           >
+            {/* 5-Second Rolling RGB Warm Amber & Golden Orange Light Beam on Dashed Border */}
+            <svg
+              className="pointer-events-none absolute inset-0 h-full w-full overflow-visible rounded-xl"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <linearGradient id="warmAmberBeamGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F59E0B" stopOpacity="0" />
+                  <stop offset="20%" stopColor="#D97706" stopOpacity="0.4" />
+                  <stop offset="45%" stopColor="#F59E0B" stopOpacity="0.95" />
+                  <stop offset="55%" stopColor="#FDE047" stopOpacity="1" />
+                  <stop offset="70%" stopColor="#F97316" stopOpacity="0.95" />
+                  <stop offset="85%" stopColor="#EA580C" stopOpacity="0.5" />
+                  <stop offset="100%" stopColor="#B45309" stopOpacity="0" />
+                </linearGradient>
+
+                <filter id="warmAmberDashedGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="4" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              {/* Underlying Base Dashed Path */}
+              <rect
+                x="1"
+                y="1"
+                width="calc(100% - 2px)"
+                height="calc(100% - 2px)"
+                rx="12"
+                fill="none"
+                stroke="#44403c"
+                strokeWidth="2"
+                strokeDasharray="6 6"
+              />
+
+              {/* Ambient Glowing Dashed Beam Rolling Loop */}
+              <rect
+                x="1"
+                y="1"
+                width="calc(100% - 2px)"
+                height="calc(100% - 2px)"
+                rx="12"
+                fill="none"
+                stroke="url(#warmAmberBeamGradient)"
+                strokeWidth="4"
+                strokeDasharray="6 6"
+                filter="url(#warmAmberDashedGlow)"
+                pathLength="100"
+                className="animate-dashed-glow-5s opacity-70"
+              />
+
+              {/* Crisp Core Rolling Light Beam directly along Dashed Border */}
+              <rect
+                x="1"
+                y="1"
+                width="calc(100% - 2px)"
+                height="calc(100% - 2px)"
+                rx="12"
+                fill="none"
+                stroke="url(#warmAmberBeamGradient)"
+                strokeWidth="2"
+                strokeDasharray="6 6"
+                pathLength="100"
+                className="animate-dashed-glow-5s"
+              />
+            </svg>
+
             <input
               ref={fileInputRef}
               type="file"
@@ -224,11 +295,12 @@ export const SelfieUploader: React.FC<SelfieUploaderProps> = ({
             <div className="mb-2.5 flex items-center justify-between">
               <span className="flex items-center gap-1.5 text-xs font-medium text-stone-400">
                 <Sparkles className="h-3.5 w-3.5 text-amber-400" />
-                Or try a test casual selfie:
+                Or try one of {SAMPLE_SELFIES.length} test casual selfies:
               </span>
+              <span className="text-[10px] text-stone-500 font-mono">Scroll to browse all</span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4 max-h-[380px] overflow-y-auto pr-1.5">
               {SAMPLE_SELFIES.map((sample) => (
                 <button
                   key={sample.id}

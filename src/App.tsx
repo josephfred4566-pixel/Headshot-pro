@@ -7,6 +7,7 @@ import { GenerationProgress } from './components/GenerationProgress';
 import { HeadshotViewer } from './components/HeadshotViewer';
 import { HeadshotGallery } from './components/HeadshotGallery';
 import { WebcamModal } from './components/WebcamModal';
+import { SAMPLE_SELFIES } from './data/sampleSelfies';
 import { HEADSHOT_STYLES } from './data/styles';
 import { WARDROBE_OPTIONS, LIGHTING_OPTIONS, EXPRESSION_PRESETS } from './data/wardrobes';
 import {
@@ -114,9 +115,11 @@ export default function App() {
         exposure: 0,
         contrast: 0,
         warmth: 0,
+        shadows: 15,
         vignette: selectedStyle.id === 'creative-monochrome' ? 25 : 10,
         sharpness: 0,
         backgroundBlur: 0,
+        uniformBgContrast: true,
         skinEnhance: false,
         isBlackAndWhite: selectedStyle.id === 'creative-monochrome',
       };
@@ -165,9 +168,11 @@ export default function App() {
           exposure: 0,
           contrast: 0,
           warmth: 0,
+          shadows: 15,
           vignette: 10,
           sharpness: 0,
           backgroundBlur: 0,
+          uniformBgContrast: true,
           skinEnhance: false,
           isBlackAndWhite: false,
         },
@@ -230,16 +235,34 @@ export default function App() {
         {/* Step 1 & 2: Studio Setup Screen */}
         {activeStep === 'studio' && (
           <div className="space-y-6">
-            {/* Top Intro Section */}
-            <div className="rounded-2xl border border-stone-800 bg-gradient-to-b from-stone-900 via-stone-900/80 to-stone-950 p-6 sm:p-8">
-              <div className="max-w-3xl">
-                <span className="inline-flex items-center rounded-full bg-amber-500/10 px-3 py-1 text-xs font-semibold text-amber-400 ring-1 ring-amber-500/20">
-                  AI Commercial Portrait Photography
+            {/* Top Intro Section with Casual Test Image Background Collage */}
+            <div className="relative overflow-hidden rounded-2xl border border-stone-800 bg-stone-900 p-6 sm:p-8 shadow-2xl">
+              {/* Background Photo Showcase Grid of Casual Test Images */}
+              <div className="pointer-events-none absolute inset-0 z-0 opacity-30 mix-blend-luminosity">
+                <div className="grid h-full w-full grid-cols-2 sm:grid-cols-4 gap-2 transform scale-105">
+                  {SAMPLE_SELFIES.map((sample, idx) => (
+                    <div key={idx} className="relative h-full w-full overflow-hidden rounded-lg">
+                      <img
+                        src={sample.imageUrl}
+                        alt={sample.name}
+                        className="h-full w-full object-cover filter brightness-90 contrast-110 saturate-120"
+                      />
+                    </div>
+                  ))}
+                </div>
+                {/* Dark Linear & Radial Gradient Overlays for crisp readability */}
+                <div className="absolute inset-0 bg-gradient-to-r from-stone-950 via-stone-950/90 to-stone-950/50" />
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950 via-transparent to-stone-950/80" />
+              </div>
+
+              <div className="relative z-10 max-w-3xl">
+                <span className="inline-flex items-center rounded-full bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-400 ring-1 ring-amber-500/30 backdrop-blur-sm">
+                  Commercial Portrait Photography Studio
                 </span>
-                <h1 className="mt-3 font-serif text-2xl font-bold tracking-tight text-stone-100 sm:text-3xl lg:text-4xl">
+                <h1 className="mt-3 font-serif text-2xl font-bold tracking-tight text-stone-100 sm:text-3xl lg:text-4xl drop-shadow-md">
                   Transform Any Casual Selfie into a Professional Executive Headshot
                 </h1>
-                <p className="mt-2 text-sm text-stone-400 leading-relaxed">
+                <p className="mt-2.5 text-sm text-stone-300 leading-relaxed max-w-2xl drop-shadow-sm">
                   Upload a casual snapshot, choose your backdrop aesthetic (Corporate Grey, Modern Tech Office, or Outdoor Natural Light), and our studio generates flawless high-resolution portraits with 85mm prime depth of field.
                 </p>
               </div>

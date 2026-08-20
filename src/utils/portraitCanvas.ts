@@ -498,6 +498,48 @@ export async function exportAdjustedHeadshot(
         );
       }
 
+      // Shadow Brightening pass for facial definition
+      if (adjustments.shadows && adjustments.shadows > 0) {
+        try {
+          const shadowLift = adjustments.shadows / 100;
+          const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          const data = imgData.data;
+          for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const luma = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            if (luma < 0.72) {
+              const shadowWeight = Math.pow(1 - luma, 1.8) * shadowLift * 0.42;
+              data[i] = Math.min(255, Math.round(r + (255 - r) * shadowWeight));
+              data[i + 1] = Math.min(255, Math.round(g + (255 - g) * shadowWeight));
+              data[i + 2] = Math.min(255, Math.round(b + (255 - b) * shadowWeight));
+            }
+          }
+          ctx.putImageData(imgData, 0, 0);
+        } catch (e) {
+          console.warn('Shadow lift canvas processing fallback:', e);
+        }
+      }
+
+      // Uniform Background Contrast pass to keep focus on subject
+      if (adjustments.uniformBgContrast !== false) {
+        const maxR = Math.max(canvas.width, canvas.height) * 0.75;
+        const bgGrad = ctx.createRadialGradient(
+          canvas.width * 0.5,
+          canvas.height * 0.45,
+          maxR * 0.35,
+          canvas.width * 0.5,
+          canvas.height * 0.45,
+          maxR
+        );
+        bgGrad.addColorStop(0, 'rgba(0, 0, 0, 0)');
+        bgGrad.addColorStop(0.6, 'rgba(15, 15, 15, 0.06)');
+        bgGrad.addColorStop(1, 'rgba(10, 10, 10, 0.22)');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+      }
+
       // If warmth < 0 (cooler), apply a gentle blue wash
       if (adjustments.warmth < 0) {
         ctx.fillStyle = `rgba(30, 64, 175, ${Math.abs(adjustments.warmth) * 0.003})`;

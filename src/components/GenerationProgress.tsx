@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, Sparkles, CheckCircle2, Sliders } from 'lucide-react';
+import { AppLogoMark } from './AppLogo';
 
 interface GenerationProgressProps {
   styleName: string;
@@ -32,12 +33,12 @@ export const GenerationProgress: React.FC<GenerationProgressProps> = ({ styleNam
   return (
     <div className="flex min-h-[420px] flex-col items-center justify-center rounded-2xl border border-stone-800 bg-stone-900/90 p-8 text-center shadow-2xl">
       {/* Animated Studio Aperture / Shutter */}
-      <div className="relative mb-6 flex h-24 w-24 items-center justify-center">
+      <div className="relative mb-6 flex h-28 w-28 items-center justify-center">
         {/* Outer rotating ring */}
         <div className="absolute inset-0 animate-spin rounded-full border-2 border-amber-500/20 border-t-amber-400" style={{ animationDuration: '3s' }} />
-        {/* Inner pulse */}
-        <div className="flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-amber-500 to-amber-700 text-stone-950 shadow-lg shadow-amber-500/30 animate-pulse">
-          <Camera className="h-8 w-8" />
+        {/* Inner logo mark */}
+        <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-stone-950 border border-stone-800 shadow-xl shadow-amber-500/10">
+          <AppLogoMark size={64} />
         </div>
       </div>
 
@@ -82,10 +83,6 @@ export const GenerationProgress: React.FC<GenerationProgressProps> = ({ styleNam
           );
         })}
       </div>
-
-      <p className="mt-6 text-[11px] text-stone-500">
-        Utilizing Gemini AI & studio optics synthesis. This typically takes 6-12 seconds.
-      </p>
     </div>
   );
 };

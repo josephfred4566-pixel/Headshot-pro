@@ -1,5 +1,6 @@
 import React from 'react';
-import { Camera, Images, ShieldCheck } from 'lucide-react';
+import { Images, ShieldCheck } from 'lucide-react';
+import { AppLogo } from './AppLogo';
 
 interface HeaderProps {
   galleryCount: number;
@@ -14,21 +15,9 @@ export const Header: React.FC<HeaderProps> = ({ galleryCount, onOpenGallery, onN
         {/* Brand */}
         <div 
           onClick={onNewSession}
-          className="flex cursor-pointer items-center gap-3 transition-opacity hover:opacity-90"
+          className="group flex cursor-pointer items-center gap-3 transition-opacity hover:opacity-95"
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 text-stone-950 shadow-md shadow-amber-900/20">
-            <Camera className="h-5 w-5" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-serif text-lg font-semibold tracking-tight text-stone-100">
-                AI Headshot Photographer
-              </span>
-            </div>
-            <p className="text-xs text-stone-400">
-              Transform casual selfies into executive portraits in seconds
-            </p>
-          </div>
+          <AppLogo variant="horizontal" size="md" showSubtitle={true} />
         </div>
 
         {/* Right actions */}
