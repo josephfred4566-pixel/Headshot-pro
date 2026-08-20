@@ -240,7 +240,7 @@ export default function App() {
                   Transform Any Casual Selfie into a Professional Executive Headshot
                 </h1>
                 <p className="mt-2 text-sm text-stone-400 leading-relaxed">
-                  Upload a casual snapshot, choose your backdrop aesthetic (Corporate Grey, Modern Tech Office, or Outdoor Natural Light), and our studio AI generates flawless high-resolution portraits with 85mm prime depth of field.
+                  Upload a casual snapshot, choose your backdrop aesthetic (Corporate Grey, Modern Tech Office, or Outdoor Natural Light), and our studio generates flawless high-resolution portraits with 85mm prime depth of field.
                 </p>
               </div>
             </div>

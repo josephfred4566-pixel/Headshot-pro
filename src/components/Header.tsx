@@ -1,5 +1,5 @@
 import React from 'react';
-import { Camera, Sparkles, Images, ShieldCheck } from 'lucide-react';
+import { Camera, Images, ShieldCheck } from 'lucide-react';
 
 interface HeaderProps {
   galleryCount: number;
@@ -23,9 +23,6 @@ export const Header: React.FC<HeaderProps> = ({ galleryCount, onOpenGallery, onN
             <div className="flex items-center gap-2">
               <span className="font-serif text-lg font-semibold tracking-tight text-stone-100">
                 AI Headshot Photographer
-              </span>
-              <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-0.5 text-[11px] font-medium text-amber-400 ring-1 ring-amber-500/20">
-                <Sparkles className="h-3 w-3" /> Studio 85mm
               </span>
             </div>
             <p className="text-xs text-stone-400">
