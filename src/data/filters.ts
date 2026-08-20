@@ -1,0 +1,154 @@
+import { ImageAdjustments } from '../types';
+
+export interface QuickEditFilter {
+  id: string;
+  name: string;
+  badge?: string;
+  description: string;
+  iconType: 'warm' | 'cool' | 'bw' | 'golden' | 'vivid' | 'moody' | 'neutral' | 'matte';
+  previewGradient: string;
+  adjustments: ImageAdjustments;
+}
+
+export const QUICK_EDIT_FILTERS: QuickEditFilter[] = [
+  {
+    id: 'neutral-master',
+    name: 'Original Neutral',
+    badge: 'Standard',
+    description: 'Balanced natural studio lighting with neutral 5600K color profile.',
+    iconType: 'neutral',
+    previewGradient: 'from-stone-500 to-stone-700',
+    adjustments: {
+      exposure: 0,
+      contrast: 0,
+      warmth: 0,
+      vignette: 10,
+      sharpness: 0,
+      backgroundBlur: 0,
+      skinEnhance: false,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'warm-professional',
+    name: 'Warm Professional',
+    badge: 'Popular',
+    description: 'Golden amber tones with soft skin glow and welcoming executive poise.',
+    iconType: 'warm',
+    previewGradient: 'from-amber-400 via-orange-500 to-amber-700',
+    adjustments: {
+      exposure: 6,
+      contrast: 10,
+      warmth: 24,
+      vignette: 14,
+      sharpness: 0,
+      backgroundBlur: 15,
+      skinEnhance: true,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'cool-business',
+    name: 'Cool Business',
+    badge: 'Modern',
+    description: 'Crisp corporate aesthetic with cool blue steel tones and high clarity.',
+    iconType: 'cool',
+    previewGradient: 'from-sky-400 via-blue-500 to-indigo-700',
+    adjustments: {
+      exposure: 4,
+      contrast: 14,
+      warmth: -20,
+      vignette: 18,
+      sharpness: 0,
+      backgroundBlur: 10,
+      skinEnhance: false,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'classic-bw',
+    name: 'Classic B&W',
+    badge: 'Timeless',
+    description: 'High-contrast silver gelatin black-and-white editorial portrait.',
+    iconType: 'bw',
+    previewGradient: 'from-stone-200 via-stone-500 to-stone-900',
+    adjustments: {
+      exposure: 6,
+      contrast: 28,
+      warmth: 0,
+      vignette: 30,
+      sharpness: 0,
+      backgroundBlur: 20,
+      skinEnhance: true,
+      isBlackAndWhite: true,
+    },
+  },
+  {
+    id: 'golden-hour-glow',
+    name: 'Golden Hour Glow',
+    description: 'Sun-drenched ambient radiance with rich golden highlights.',
+    iconType: 'golden',
+    previewGradient: 'from-yellow-400 via-amber-500 to-rose-600',
+    adjustments: {
+      exposure: 12,
+      contrast: 8,
+      warmth: 38,
+      vignette: 20,
+      sharpness: 0,
+      backgroundBlur: 35,
+      skinEnhance: true,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'vivid-executive',
+    name: 'Vivid Executive',
+    description: 'Punchy contrast with vibrant color pop for high-visibility profiles.',
+    iconType: 'vivid',
+    previewGradient: 'from-emerald-400 via-teal-500 to-cyan-700',
+    adjustments: {
+      exposure: 8,
+      contrast: 22,
+      warmth: 6,
+      vignette: 12,
+      sharpness: 0,
+      backgroundBlur: 25,
+      skinEnhance: false,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'moody-cinematic',
+    name: 'Moody Cinematic',
+    description: 'Deep shadows, sculpted key contrast, and prominent studio vignette.',
+    iconType: 'moody',
+    previewGradient: 'from-purple-900 via-stone-900 to-stone-950',
+    adjustments: {
+      exposure: -10,
+      contrast: 32,
+      warmth: -8,
+      vignette: 45,
+      sharpness: 0,
+      backgroundBlur: 45,
+      skinEnhance: false,
+      isBlackAndWhite: false,
+    },
+  },
+  {
+    id: 'matte-editorial-bw',
+    name: 'Matte Editorial B&W',
+    description: 'Soft velvety monochrome finish with lifted blacks and low grain.',
+    iconType: 'matte',
+    previewGradient: 'from-stone-300 via-stone-600 to-stone-800',
+    adjustments: {
+      exposure: 12,
+      contrast: -8,
+      warmth: 0,
+      vignette: 20,
+      sharpness: 0,
+      backgroundBlur: 15,
+      skinEnhance: true,
+      isBlackAndWhite: true,
+    },
+  },
+];

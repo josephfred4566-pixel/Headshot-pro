@@ -1,0 +1,7 @@
+{
+  "name": "AI Headshot Photographer",
+  "description": "Generate studio-grade professional headshots from casual selfies across corporate, modern tech, natural outdoor, and executive styles.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
